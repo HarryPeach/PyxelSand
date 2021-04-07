@@ -12,6 +12,7 @@ class SandGame():
         self.width = width
         self.height = height
         self.env = Environment(width, height)
+        self.selected_particle = SandParticle
 
         pyxel.run(self.draw, self.update)
 
@@ -26,15 +27,24 @@ class SandGame():
 
                 pyxel.rect(x, y, 1, 1, particle.color)
 
+        pyxel.text(2, 2, "Press numbers to switch particles", 7)
+
     def update(self) -> None:
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
 
+        if pyxel.btnp(pyxel.KEY_1):
+            self.selected_particle = SandParticle
+
+        if pyxel.btnp(pyxel.KEY_2):
+            self.selected_particle = WallParticle
+
         if pyxel.btn(pyxel.MOUSE_LEFT_BUTTON):
-            self.env.set(pyxel.mouse_x, pyxel.mouse_y, SandParticle())
+            self.env.set(pyxel.mouse_x, pyxel.mouse_y,
+                         self.selected_particle())
 
         if pyxel.btn(pyxel.MOUSE_RIGHT_BUTTON):
-            self.env.set(pyxel.mouse_x, pyxel.mouse_y, WallParticle())
+            self.env.set(pyxel.mouse_x, pyxel.mouse_y, None)
 
         # Don't re-update particles that have moved
         updated_particles = []
