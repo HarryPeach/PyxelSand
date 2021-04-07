@@ -4,6 +4,9 @@ from expects import expect, equal, be
 
 
 class TestEnvironment():
+    """Tests the Environment class
+    """
+
     def test_env_creation(self):
         """Tests that an environment is successfully created
         """
@@ -27,3 +30,17 @@ class TestEnvironment():
 
         expect(env.get(1, 1)).to(be(bp))
         expect(env.get(1, 2)).to(be(bp))
+
+    def test_env_set(self):
+        """Test that the set function correctly sets the particle in a
+        specific location
+        """
+        env = Environment(4, 4)
+
+        bp = SandParticle()
+
+        env.set(1, 1, bp)
+        env.set(2, 2, bp)
+
+        expect(env.env[10]).to(be(bp))
+        expect(env.env[5]).to(be(bp))
