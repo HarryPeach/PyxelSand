@@ -1,6 +1,7 @@
-from sand_game.particles.SandParticle import SandParticle
 import pyxel
-# from sand_game.PlaySpace import PlaySpace
+from sand_game.Environment import Environment
+from sand_game.particles.SandParticle import SandParticle
+from sand_game.particles.WallParticle import WallParticle
 
 
 class SandGame():
@@ -10,30 +11,46 @@ class SandGame():
         pyxel.mouse(True)
         self.width = width
         self.height = height
-        self.particles = [SandParticle(10, 10)]
+        self.env = Environment(width, height)
 
         pyxel.run(self.draw, self.update)
 
     def draw(self) -> None:
         pyxel.cls(0)
 
-        for particle in self.particles:
-            pyxel.rect(particle.x, particle.y, 1, 1, particle.color)
+        for x in range(self.width):
+            for y in range(self.height):
+                particle = self.env.get(x, y)
+                if particle is None:
+                    continue
+
+                pyxel.rect(x, y, 1, 1, particle.color)
 
     def update(self) -> None:
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
 
-        if pyxel.btn(pyxel.MOUSE_LEFT_BUTTON):  # TODO: Check if space is taken
-            self.particles.append(SandParticle(
-                pyxel.mouse_x, pyxel.mouse_y))
+        if pyxel.btn(pyxel.MOUSE_LEFT_BUTTON):
+            self.env.set(pyxel.mouse_x, pyxel.mouse_y, SandParticle())
 
-        for particle in self.particles:
-            particle.update()
+        if pyxel.btn(pyxel.MOUSE_RIGHT_BUTTON):
+            self.env.set(pyxel.mouse_x, pyxel.mouse_y, WallParticle())
 
-            # Remove a particle if it goes off-screen
-            if particle.y > self.height or particle.x > self.width:
-                self.particles.remove(particle)
+        # Don't re-update particles that have moved
+        updated_particles = []
+
+        for x in range(self.width):
+            for y in range(self.height):
+                particle = self.env.get(x, y)
+                if particle is None:
+                    continue
+
+                if particle in updated_particles:
+                    continue
+
+                for behaviour in particle.behaviours:
+                    behaviour.behave(self.env, (x, y))
+                updated_particles.append(particle)
 
 
 if __name__ == "__main__":

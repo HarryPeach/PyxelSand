@@ -2,7 +2,7 @@ from sand_game.particles.Particle import Particle
 from sand_game.behaviours.FallBehaviour import FallBehaviour
 
 
-class SandParticle(Particle):
+class WallParticle(Particle):
 
     def __init__(self):
-        super().__init__(10, True, "Sand", 0, 0, [FallBehaviour])
+        super().__init__(13, False, "Wall", 0, 0, [])
