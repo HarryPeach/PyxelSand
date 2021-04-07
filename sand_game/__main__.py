@@ -1,3 +1,4 @@
+from sand_game.particles.FireParticle import FireParticle
 import pyxel
 from sand_game.Environment import Environment
 from sand_game.particles.SandParticle import SandParticle
@@ -27,7 +28,7 @@ class SandGame():
 
                 pyxel.rect(x, y, 1, 1, particle.color)
 
-        pyxel.text(2, 2, "Press numbers to switch particles", 7)
+        pyxel.text(2, 2, "Press numbers 1-3 to switch particles", 7)
 
     def update(self) -> None:
         if pyxel.btnp(pyxel.KEY_Q):
@@ -38,6 +39,9 @@ class SandGame():
 
         if pyxel.btnp(pyxel.KEY_2):
             self.selected_particle = WallParticle
+
+        if pyxel.btnp(pyxel.KEY_3):
+            self.selected_particle = FireParticle
 
         if pyxel.btn(pyxel.MOUSE_LEFT_BUTTON):
             self.env.set(pyxel.mouse_x, pyxel.mouse_y,
