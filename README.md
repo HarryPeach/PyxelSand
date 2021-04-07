@@ -9,6 +9,7 @@
 1. Install [Poetry](https://python-poetry.org/)
 2. Run `poetry install` in the root directory
 3. Run `poetry run python -m sand_game`
+4. (Optional) Run `poetry run pytest` to run unit tests
 
 ## How to play
 - Left click places a particle at the mouses location
