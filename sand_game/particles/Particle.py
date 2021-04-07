@@ -3,6 +3,9 @@ from sand_game.behaviours.Behaviour import Behaviour
 
 
 class Particle(ABC):
+    """Represents a single particle, should be extended for any custom
+    particles
+    """
 
     @abstractmethod
     def __init__(self, color: int, name: str,

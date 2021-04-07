@@ -6,6 +6,9 @@ from sand_game.behaviours.Behaviour import Behaviour
 
 
 class FlammableBehaviour(Behaviour):
+    """Causes the particle to catch fire and turn into fire itself if any of its immediate neighbours are
+    """
+
     def behave(env: Environment, loc: tuple[int, int]) -> tuple[int, int]:
         left_particle = env.get(loc[0] - 1, loc[1])
         right_particle = env.get(loc[0] + 1, loc[1])

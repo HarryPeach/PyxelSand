@@ -5,6 +5,8 @@ from sand_game.behaviours.Behaviour import Behaviour
 
 
 class FallBehaviour(Behaviour):
+    """Causes the particle to fall downwards every frame
+    """
     def behave(env: Environment, loc: tuple[int, int]) -> tuple[int, int]:
         if (loc[1] + 1) >= env.height:
             return (loc[0], loc[1])
